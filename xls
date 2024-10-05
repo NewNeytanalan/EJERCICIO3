@@ -1,0 +1,114 @@
+A) # @title Texto de título predeterminado
+import numpy as np
+
+def percentile(data, p):
+    """Calculates the p-th percentile of a dataset.
+
+    Args:
+        data: A list or array of numbers.
+        p: The desired percentile (between 0 and 100).
+
+    Returns:
+        The p-th percentile of the data.
+    """
+
+    n = len(data)
+    k = int((p / 100) * (n - 1))
+    return np.sort(data)[k]
+
+def quartiles(data):
+    """Calculates the first, second, and third quartiles of a dataset.
+
+    Args:
+        data: A list or array of numbers.
+
+    Returns:
+        A tuple containing the first, second, and third quartiles.
+    """
+
+    q1 = percentile(data, 25)
+    q2 = percentile(data, 50)
+    q3 = percentile(data, 75)
+    return q1, q2, q3
+-------------------------------------------------------------------------------------------
+# Función para calcular percentil sin librerías
+def calcular_percentil(data, percentil):
+    data_ordenada = sorted(data)
+    k = (len(data_ordenada) - 1) * (percentil / 100)
+    f = int(k)
+    c = k - f
+    if f + 1 < len(data_ordenada):
+        return data_ordenada[f] + (c * (data_ordenada[f+1] - data_ordenada[f]))
+    else:
+        return data_ordenada[f]
+
+# Función para calcular cuartiles
+def calcular_cuartiles(data):
+    q1 = calcular_percentil(data, 25)
+    q2 = calcular_percentil(data, 50)  # También es la mediana
+    q3 = calcular_percentil(data, 75)
+    return q1, q2, q3
+
+# Datos de ejemplo (puede ser cualquier columna del dataset)
+data_columna = [12, 15, 14, 17, 19, 20, 21, 23, 24, 26, 27, 28, 30, 35]
+
+# Cálculo de percentiles y cuartiles
+q1, q2, q3 = calcular_cuartiles(data_columna)
+print(f"Q1: {q1}, Mediana (Q2): {q2}, Q3: {q3}")
+----------------------------------------------------------------------------------
+B)
+# Datos ficticios para el ejemplo
+presupuesto = [140, 200, 220, 300, 350, 356, 200, 100, 150, 450]  # en millones USD
+recaudacion = [585, 800, 950, 1200, 1400, 2798, 700, 500, 450, 1800]
+
+plt.scatter(presupuesto, recaudacion, color='g')
+plt.title('Relación entre Presupuesto y Recaudación Mundial')
+plt.xlabel('Presupuesto (millones USD)')
+plt.ylabel('Recaudación Mundial (millones USD)')
+plt.show()
+-----------------------------------------------------------------------------------------------
+C)
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
+
+# Datos ficticios
+recaudacion = [585, 800, 950, 1200, 1400, 2798, 700, 500, 450, 1800]
+presupuesto = [140, 200, 220, 300, 350, 356, 200, 100, 150, 450]
+
+# Cálculo de media, mediana y moda
+media_recaudacion = np.mean(recaudacion)
+mediana_recaudacion = np.median(recaudacion)
+moda_recaudacion = stats.mode(recaudacion)[0][0]
+
+print(f"Media: {media_recaudacion}, Mediana: {mediana_recaudacion}, Moda: {moda_recaudacion}")
+
+# Diagrama de Caja y Bigote
+data = [recaudacion, presupuesto]
+plt.boxplot(data, labels=['Recaudación', 'Presupuesto'])
+plt.title('Diagrama de Caja y Bigote: Recaudación vs Presupuesto')
+plt.show()
+-------------------------------------------------------------------------------------------------------
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
+
+# Datos de ejemplo
+precio_boletos = [8, 9, 8.5, 9, 9.5, 10, 10.5, 11, 9.5, 9, 8.5, 8]
+funciones_por_dia = [3, 4, 3, 5, 4, 4, 5, 5, 3, 3, 4, 3]
+entradas_vendidas = [200, 240, 230, 250, 260, 280, 290, 300, 210, 220, 230, 210]
+
+# Cálculo de media, mediana y moda
+media_precio = np.mean(precio_boletos)
+mediana_precio = np.median(precio_boletos)
+moda_precio = stats.mode(precio_boletos)
+
+print(f"Media precio boletos: {media_precio}, Mediana: {mediana_precio}, Moda: {moda_precio.mode[0]}")
+
+# Diagrama de cajas para las tres columnas
+data = [precio_boletos, funciones_por_dia, entradas_vendidas]
+
+plt.boxplot(data, labels=["Precio Boletos", "Funciones/día", "Entradas Vendidas"])
+plt.title("Diagrama de Cajas-Bigote")
+plt.ylabel("Valores")
+plt.show()
